@@ -1,0 +1,4 @@
+1: Linda Olsson 52 16
+2: Mikael Bergman 45 72
+3: Karin Jansson Fernandez 69 54
+4: Daniel Lindman 58 74

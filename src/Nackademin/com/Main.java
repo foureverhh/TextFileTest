@@ -46,19 +46,30 @@ public class Main {
             if(num >= 50)
                 System.out.println(info+" "+num);
         }
+         */
         System.out.print("Input the file for scanner:");
         Scanner getFile = new Scanner(System.in);
         String fileNameFromScanner = getFile.next();
         Scanner scanner = new Scanner(new File(fileNameFromScanner));
+       // PrintWriter output = new PrintWriter(new BufferedWriter(new FileWriter("getInfoFromResult.txt")));
+        System.out.print("Input the file you wanted to store data"); System.out.flush();
+        BufferedReader getStoredFileName = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = getStoredFileName.readLine();
+        PrintWriter output = new PrintWriter(new BufferedWriter(new FileWriter(fileName,true))); //To append the extra value
+        int row = 0, extra=0;
         while(scanner.hasNext()){
+            row++;
+            extra++;
             String name = scanner.next();
             while(!scanner.hasNextInt())
                 name += " "+scanner.next();
             int point1 = scanner.nextInt();
             int point2 = scanner.nextInt();
             System.out.println(name+" "+point1+" "+ point2);
+            output.println(row+": "+name+" "+point1+" "+ point2+ " "+extra);
         }
-        */
+        output.close();
+
 
     }
 }
