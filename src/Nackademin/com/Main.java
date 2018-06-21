@@ -116,6 +116,7 @@ public class Main {
         printWriter.close();
         System.out.println("Data saved to saveFromScanner.txt");
 */
+        /*
         //test JFileChooser showSaveDialog()
        // JFileChooser jf = new JFileChooser();
         String file = System.getProperty("user.dir");
@@ -127,6 +128,67 @@ public class Main {
             System.out.println("No file has been chosen");
             System.exit(0);
         }
+        */
+        //modify content data from a text file and save the changes back
+        //get file name
+        System.out.print("Name the name of your file:");System.out.flush();
+        Scanner scanner = new Scanner(System.in);
+        String fileName = scanner.next();
 
+        while(true){
+            System.out.print("Input the name of the new student:");System.out.flush();
+            scanner = new Scanner(System.in);
+            String newStudent = scanner.nextLine();
+            if(newStudent == null)
+                break;
+            System.out.print("Input the credits of the new student:");System.out.flush();
+            scanner = new Scanner(System.in);
+            int newCredit = scanner.nextInt();
+            boolean studentIsNotSaved = true;
+
+            //Read data from the file of fileName
+            BufferedReader input = new BufferedReader(new FileReader(fileName));
+            //Save the data above to a file called file.tmp
+            PrintWriter output = new PrintWriter(new BufferedWriter(new FileWriter("file.tmp")));
+
+            while(true){
+                String row1 = input.readLine();
+                if(row1 == null)
+                    break;
+                String row2 = input.readLine();
+                int credit = Integer.parseInt(row2);
+
+                if(newCredit > credit && studentIsNotSaved){
+                    output.println(newStudent);
+                    output.println(newCredit);
+                    studentIsNotSaved = false;
+                }
+                output.println(row1);
+                output.println(row2);
+            }
+            // if the student is new but credit is not higher than nobody
+            if(studentIsNotSaved){
+                output.println(newStudent);
+                output.println(newCredit);
+            }
+
+            input.close();
+            output.close();
+
+            //Write the new data back to fileName
+            input = new BufferedReader(new FileReader("file.tmp"));
+            output = new PrintWriter(new FileWriter(fileName));
+
+            //Copy each row from fil.tmp back to fileName
+            while (true){
+                String row = input.readLine();
+                if(row == null)
+                    break;
+                output.println(row);
+            }
+            System.out.println("New student has added.");
+            input.close();
+            output.close();
+        }
     }
 }
