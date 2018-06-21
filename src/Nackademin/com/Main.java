@@ -1,5 +1,6 @@
 package Nackademin.com;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.Scanner;
 
@@ -47,6 +48,7 @@ public class Main {
                 System.out.println(info+" "+num);
         }
          */
+        /*
         System.out.print("Input the file for scanner:");
         Scanner getFile = new Scanner(System.in);
         String fileNameFromScanner = getFile.next();
@@ -69,7 +71,49 @@ public class Main {
             output.println(row+": "+name+" "+point1+" "+ point2+ " "+extra);
         }
         output.close();
+*/
+        JFileChooser jFileChooser = new JFileChooser();
+        //To show the file map
+        int findAFile = jFileChooser.showOpenDialog(null);
+        //If user choose a file JFileChooser.APPROVE_OPTION will work
+        if(findAFile != JFileChooser.APPROVE_OPTION){
+            System.out.println("No file is chosen");
+            System.exit(0);
+        }
+        //to get the absolute path of the file chosen
+        String chosenFile = jFileChooser.getSelectedFile().getAbsolutePath();
+        BufferedReader reader = new BufferedReader(new FileReader(chosenFile));
+        PrintWriter printWriter = new PrintWriter(new FileWriter("saveFromBufferedReader.txt"));
+        System.out.println("Date from BufferedReader: ");
+        while(true){
+            String dataFromReader = reader.readLine();
+            if(dataFromReader == null)
+                break;
+            String dataPoint = reader.readLine();
+            int point = Integer.parseInt(dataPoint);
+            //Write data to text file
+            printWriter.println(dataFromReader+" "+point);
+            System.out.println(dataFromReader+" "+point);
 
+        }
+        printWriter.close();
+        System.out.println("Data saved to saveFromBufferedReader.txt");
+        System.out.println();
+        System.out.println("Data From Scanner: ");
+        Scanner scanner = new Scanner(new FileReader(chosenFile));
+        printWriter = new PrintWriter(new FileWriter("saveFromScanner.txt"));
+        while(scanner.hasNext()){
+            StringBuilder str = new StringBuilder();
+            str.append(scanner.next());
+            while (!scanner.hasNextInt()){
+                str.append(" "+scanner.next());
+            }
+            int point = scanner.nextInt();
+            printWriter.println(str+" "+point);
+            System.out.println(str+" "+point);
+        }
+        printWriter.close();
+        System.out.println("Data saved to saveFromScanner.txt");
 
     }
 }
