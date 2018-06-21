@@ -72,6 +72,7 @@ public class Main {
         }
         output.close();
 */
+        /*
         JFileChooser jFileChooser = new JFileChooser();
         //To show the file map
         int findAFile = jFileChooser.showOpenDialog(null);
@@ -114,6 +115,18 @@ public class Main {
         }
         printWriter.close();
         System.out.println("Data saved to saveFromScanner.txt");
+*/
+        //test JFileChooser showSaveDialog()
+       // JFileChooser jf = new JFileChooser();
+        String file = System.getProperty("user.dir");
+        System.out.println(file);
+        JFileChooser jf = new JFileChooser("C:\\Users\\zfgg0\\GitUpload");
+        int result = jf.showSaveDialog(null);
+        // int result = jf.showDialog(null,"Choose a file");
+        if(result!=JFileChooser.APPROVE_OPTION){
+            System.out.println("No file has been chosen");
+            System.exit(0);
+        }
 
     }
 }
