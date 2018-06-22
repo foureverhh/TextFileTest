@@ -129,6 +129,7 @@ public class Main {
             System.exit(0);
         }
         */
+        /*
         //modify content data from a text file and save the changes back
         //get file name
         System.out.print("Name the name of your file:");System.out.flush();
@@ -190,5 +191,63 @@ public class Main {
             input.close();
             output.close();
         }
+        */
+
+        //Practice of checking which prescription is cheaper
+        String[] name = new String[100];
+        double[] perMonth = new double[100];
+        double[] perMinDay = new double[100];
+        double[] perMinOther = new double[100];
+        double[] freeDay = new double[100];
+        double[] freeOther = new double[100];
+
+        Scanner getData = new Scanner(new File("mobileData.txt"));
+        int n = 0;
+        while(getData.hasNext()){
+            name[n] = getData.next();
+            perMonth[n] = getData.nextDouble();
+            perMinDay[n] = getData.nextDouble();
+            perMinOther[n] = getData.nextDouble();
+            freeDay[n] = getData.nextDouble();
+            freeOther[n] = getData.nextDouble();
+            n++;
+        }
+/*
+        while(true){
+            System.out.print("How many minutes do you call?\n"+"Per month and other day respective?");System.out.flush();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            String str1 = reader.readLine();
+            if(str1 == null)
+                break;
+
+            double minMonth = Double.parseDouble(str1);
+            String str2 = reader.readLine();
+            double minOther = Double.parseDouble(str2);
+            System.out.println(minMonth+" "+minOther);
+
+        }
+        */
+            while (true) {
+                System.out.print("How many minutes do you call?\n" + "Per month and other day respective?");
+                System.out.flush();
+                Scanner scanner = new Scanner(System.in);
+                if(!scanner.hasNext())
+                    break;
+                double minDay = scanner.nextDouble();
+                double minOther = scanner.nextDouble();
+                double cheapest = Double.MAX_VALUE;
+                int index = 0;
+                for(int i = 0; i < n;i++ ){
+                    double antalDag = Math.max(minDay-freeDay[i],0);
+                    double antalOther = Math.max(minOther-freeOther[i],0);
+                    double cost = perMonth[i]+antalDag*perMinDay[i]+antalOther*perMinOther[i];
+                   if(cost<cheapest){
+                       cheapest = cost;
+                       index=i;
+                   }
+                String result = String.format("%.2f",cheapest);
+                    System.out.println(name[index]+" is cheapest\n"+"Cost is: "+" kr/month");
+                }
+            }
     }
 }
