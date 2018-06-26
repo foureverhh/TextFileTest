@@ -192,7 +192,7 @@ public class Main {
             output.close();
         }
         */
-
+/*
         //Practice of checking which prescription is cheaper
         String[] name = new String[100];
         double[] perMonth = new double[100];
@@ -227,6 +227,7 @@ public class Main {
 
         }
         */
+/*
             while (true) {
                 System.out.print("How many minutes do you call?\n" + "Per month and other day respective?");
                 System.out.flush();
@@ -249,5 +250,45 @@ public class Main {
                     System.out.println(name[index]+" is cheapest\n"+"Cost is: "+" kr/month");
                 }
             }
+*/
+            //Use two dimensional array to calculate cheapest subscription
+            String[] name = new String[100];
+            double[][] data = new double[100][5];
+            Scanner scanner = new Scanner(new File("mobileData.txt"));
+            int n = 0;
+            while(scanner.hasNext()){
+                name[n] = scanner.next();
+                for(int j = 0; j < data[0].length; j++){
+                    data[n][j] = scanner.nextDouble();
+                    n++;
+                }
+            }
+
+            while (true){
+                System.out.println("Input your your numbers:");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                String str1 = reader.readLine();
+                if(str1 == null)
+                    break;
+                String str2 = reader.readLine();
+                double minDay = Double.parseDouble(str1);
+                double minOther = Double.parseDouble(str2);
+                double cheapest = Double.MAX_VALUE;
+                int index = 0;
+                for(int i = 0; i < n ; i++ ){
+                    double amountDay = Math.max(minDay-data[i][3],0);
+                    double amountOther = Math.max(minOther-data[i][4],0);
+                    double cost = data[i][0] + amountDay*data[i][1] + amountOther*data[i][2];
+                    if(cost < cheapest){
+                        cheapest = cost;
+                        index = i;
+                    }
+                }
+
+                String result = String.format("%.2f",cheapest);
+                System.out.println(name[index] + " is cheapest /n"+
+                "Cost: "+ result+ " kr/month.");
+            }
+
     }
 }
